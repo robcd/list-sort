@@ -10,34 +10,27 @@ abstract class AbBenchmark extends PerformanceTest {
 
   type Generated
 
+  def operation: String
   def generated(size: Int): Generated
   def use(generated: Generated)
 
+  // NB had to make this lazy in order to take it out of the singleton object (and put it in
+  // this superclass)
   lazy val gen = {
     val sizes = Gen.range("size")(30000, 150000, 30000)
-    //        ^^^^^^^^^
+    //          ^^^^^^^^^
     // predefined 'basic' (cf. 'composed') generator, that generates the Ints that would be
     // contained in a Range constructed using the specified values; here, from 300k to 1500k, in
     // steps of 300k; "size": all basic generators require a name, which should describe each Int
     // generated
 
     for {
-      size <- sizes               // org.scalameter.Gen[Int]
-    //} yield ((0 until size).toList, size) // org.scalameter.Gen[(List, size)]
-
-    } yield generated(size) // org.scalameter.Gen[(List, size)]
+      size <- sizes         // org.scalameter.Gen[Int]
+    } yield generated(size) // org.scalameter.Gen[Generated]
   }
 
-  // hence, each of the following Ranges in turn will be substituted for `r` below:
-  //
-  // 0--3k
-  // 0--6k
-  // 0--9k
-  // 0-12k
-  // 0-15k
-
-  performance of "List" in {
-    measure method "sort" in {
+  performance of operation in {
+    measure method "" in {
       using(gen) in use
     }
   }
