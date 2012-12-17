@@ -31,9 +31,7 @@ abstract class AbBenchmark extends PerformanceTest {
   def generated(size: Int): Generated
   def use(generated: Generated)
 
-  // NB had to make this lazy in order to take it out of the singleton object (and put it in
-  // this superclass)
-  lazy val gen = {
+  val gen = {
     val sizes = Gen.range("size")(30000, 150000, 30000)
     //          ^^^^^^^^^
     // predefined 'basic' (cf. 'composed') generator, that generates the Ints that would be
@@ -47,8 +45,6 @@ abstract class AbBenchmark extends PerformanceTest {
   }
 
   performance of operation in {
-    measure method "" in {
-      using(gen) in use
-    }
+    using(gen) in use
   }
 }
