@@ -34,10 +34,10 @@ object Sort2ListLenBenchmark extends PerformanceTest with ListSort2[Int] {
     val sizes = Gen.range("size")(30000, 150000, 30000)
     for {
       size <- sizes                       // org.scalameter.Gen[Int]
-    } yield ((0 until size).toList, size) // org.scalameter.Gen[(List[Int], Int)]
+    } yield ((size to 1 by -1).toList, size) // org.scalameter.Gen[(List[Int], Int)]
   }
 
-  performance of "sort(list, len)" in {
+  performance of "sort(list, len) using Futures" in {
     using(gen) in {
       case (list, size) => sort(list, size)
     }

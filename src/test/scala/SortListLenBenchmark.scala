@@ -22,7 +22,7 @@ with ListSort1[Int] with java.io.Serializable {
   type Generated = (List[Int], Int)
 
   def operation = "sort(list, len)"
-  def generated(size: Int) = ((0 until size).toList, size)
+  def generated(size: Int) = ((size to 1 by -1).toList, size)
   def use(generated: Generated) {
     val (list, size) = generated
     sort(list, size)

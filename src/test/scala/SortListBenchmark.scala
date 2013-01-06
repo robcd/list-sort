@@ -22,6 +22,6 @@ with ListSort1[Int] with java.io.Serializable {
   type Generated = List[Int]
 
   def operation = "sort(list)"
-  def generated(size: Int) = (0 until size).toList
+  def generated(size: Int) = (size to 1 by -1).toList
   def use(generated: Generated) = sort(generated)
 }

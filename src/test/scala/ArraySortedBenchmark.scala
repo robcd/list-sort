@@ -20,6 +20,6 @@ with java.io.Serializable {
   type Generated = Array[Int]
 
   def operation = "array.sorted"
-  def generated(size: Int) = (0 until size).toArray
+  def generated(size: Int) = (size to 1 by -1).toArray
   def use(generated: Generated) = generated.sorted
 }
